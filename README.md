@@ -1,2 +1,2 @@
 # william-est-wedding
-William &amp; East — Our Wedding Reminder 💍✨
+William &amp; Est — Our Wedding Reminder 💍✨
