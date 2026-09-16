@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>William & East — Wedding Reminder</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    font-family: 'Montserrat', sans-serif;
+    background:
+        linear-gradient(rgba(239,249,255,0.88), rgba(255,255,255,0.96)),
+        radial-gradient(circle at top, #bfe5f7, #ffffff 65%);
+    color: #31566d;
+    overflow-x: hidden;
+}
+
+/* Elegant snow-like particles */
+.snow {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.snow span {
+    position: absolute;
+    top: -20px;
+    width: 5px;
+    height: 5px;
+    background: white;
+    border-radius: 50%;
+    opacity: .75;
+    animation: fall linear infinite;
+}
+
+.snow span:nth-child(1) { left: 8%; animation-duration: 9s; }
+.snow span:nth-child(2) { left: 21%; animation-duration: 12s; animation-delay: 2s; }
+.snow span:nth-child(3) { left: 36%; animation-duration: 10s; animation-delay: 1s; }
+.snow span:nth-child(4) { left: 52%; animation-duration: 14s; }
+.snow span:nth-child(5) { left: 67%; animation-duration: 11s; animation-delay: 3s; }
+.snow span:nth-child(6) { left: 81%; animation-duration: 13s; }
+.snow span:nth-child(7) { left: 94%; animation-duration: 10s; animation-delay: 2s; }
+
+@keyframes fall {
+    from { transform: translateY(-20px); }
+    to { transform: translateY(110vh); }
+}
+
+/* Main card */
+.wrapper {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 16px;
+}
+
+.card {
+    width: 100%;
+    max-width: 520px;
+    background: rgba(255,255,255,.90);
+    border: 1px solid rgba(125,180,210,.45);
+    border-radius: 28px;
+    padding: 42px 24px 38px;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(74,130,160,.18);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Royal corner decorations */
+.card::before,
+.card::after {
+    content: "✦";
+    position: absolute;
+    color: #8bbfd8;
+    font-size: 25px;
+}
+
+.card::before {
+    top: 18px;
+    left: 22px;
+}
+
+.card::after {
+    top: 18px;
+    right: 22px;
+}
+
+.small-title {
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    font-size: 11px;
+    color: #78a9c0;
+    margin-bottom: 18px;
+}
+
+.names {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(42px, 11vw, 62px);
+    font-weight: 600;
+    color: #315d76;
+    line-height: 1;
+}
+
+.amp {
+    font-size: 30px;
+    color: #9bc8df;
+    margin: 9px 0;
+    font-family: 'Cormorant Garamond', serif;
+}
+
+.subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-style: italic;
+    color: #7299ad;
+    margin-top: 16px;
+}
+
+/* Alpine mountains */
+.mountains {
+    margin: 30px -24px 25px;
+    height: 120px;
+    position: relative;
+    overflow: hidden;
+    background: linear-gradient(to bottom, #eaf8ff, #ffffff);
+}
+
+.mountain {
+    position: absolute;
+    bottom: -35px;
+    width: 230px;
+    height: 160px;
+    transform: rotate(45deg);
+    background: #d7edf7;
+}
+
+.mountain.one {
+    left: -65px;
+}
+
+.mountain.two {
+    left: 130px;
+    bottom: -48px;
+    width: 250px;
+    height: 190px;
+    background: #c2e1ee;
+}
+
+.mountain.three {
+    right: -70px;
+    bottom: -45px;
+    background: #e2f2f8;
+}
+
+.snowcap {
+    position: absolute;
+    width: 75px;
+    height: 75px;
+    background: white;
+    transform: rotate(45deg);
+    top: 30px;
+    left: calc(50% - 37px);
+    opacity: .95;
+}
+
+/* Date */
+.date {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    font-weight: 600;
+    color: #315d76;
+    margin-bottom: 6px;
+}
+
+.location {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #83a9ba;
+}
+
+/* Countdown */
+.countdown-title {
+    margin-top: 34px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 23px;
+    color: #426d84;
+}
+
+.countdown {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    margin: 16px 0 34px;
+}
+
+.time-box {
+    background: linear-gradient(145deg, #edf9ff, #ffffff);
+    border: 1px solid #c5e2ef;
+    border-radius: 14px;
+    padding: 12px 4px;
+}
+
+.time-box strong {
+    display: block;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 27px;
+    color: #416f86;
+}
+
+.time-box span {
+    font-size: 8px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #8aaabb;
+}
+
+/* RSVP */
+.divider {
+    width: 70px;
+    height: 1px;
+    background: #b5d6e4;
+    margin: 0 auto 25px;
+}
+
+.rsvp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 29px;
+    color: #315d76;
+}
+
+.rsvp-text {
+    font-size: 12px;
+    line-height: 1.8;
+    color: #7899a8;
+    margin: 8px auto 20px;
+    max-width: 350px;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+button {
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    transition: .25s ease;
+}
+
+.yes {
+    background: #a9d6ea;
+    color: white;
+    box-shadow: 0 8px 20px rgba(100,170,205,.22);
+}
+
+.yes:hover {
+    transform: translateY(-2px);
+}
+
+.no {
+    background: white;
+    color: #7197aa;
+    border: 1px solid #c7e0eb;
+}
+
+.no:hover {
+    transform: translateY(-2px);
+}
+
+.message {
+    display: none;
+    margin-top: 22px;
+    padding: 20px;
+    border-radius: 18px;
+    background: #f2faff;
+    border: 1px solid #d2e8f2;
+    animation: appear .5s ease;
+}
+
+.message h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 25px;
+    color: #416f86;
+    margin-bottom: 8px;
+}
+
+.message p {
+    font-size: 11px;
+    line-height: 1.7;
+    color: #7899a8;
+}
+
+@keyframes appear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.footer {
+    margin-top: 30px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: #91afbd;
+}
+
+.crown {
+    font-size: 22px;
+    margin-bottom: 12px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="snow">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+
+<div class="wrapper">
+    <main class="card">
+
+        <div class="crown">♔</div>
+
+        <div class="small-title">A little reminder from</div>
+
+        <div class="names">William</div>
+        <div class="amp">&amp;</div>
+        <div class="names">East</div>
+
+        <div class="subtitle">
+            Our wedding day is almost here...
+        </div>
+
+        <div class="mountains">
+            <div class="mountain one"></div>
+            <div class="mountain two"></div>
+            <div class="mountain three"></div>
+            <div class="snowcap"></div>
+        </div>
+
+        <div class="date">Sunday • October 4, 2026</div>
+        <div class="location">A little piece of Switzerland in our hearts</div>
+
+        <div class="countdown-title">The countdown to forever</div>
+
+        <div class="countdown">
+            <div class="time-box">
+                <strong id="days">00</strong>
+                <span>Days</span>
+            </div>
+            <div class="time-box">
+                <strong id="hours">00</strong>
+                <span>Hours</span>
+            </div>
+            <div class="time-box">
+                <strong id="minutes">00</strong>
+                <span>Minutes</span>
+            </div>
+            <div class="time-box">
+                <strong id="seconds">00</strong>
+                <span>Seconds</span>
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="rsvp-title">Will you celebrate with us?</div>
+
+        <p class="rsvp-text">
+            Our special day is getting closer, and we'd love to know
+            if you'll be joining us for this little celebration of love.
+        </p>
+
+        <div class="buttons">
+            <button class="yes" onclick="showYes()">
+                ♡ YES, I'LL BE THERE
+            </button>
+
+            <button class="no" onclick="showNo()">
+                ♡ SORRY, I CAN'T JOIN
+            </button>
+        </div>
+
+        <div class="message" id="yesMessage">
+            <h3>We're so happy! 🤍</h3>
+            <p>
+                Thank you for being part of our special day.
+                Your presence will make our little celebration
+                even more precious. 🩵
+            </p>
+        </div>
+
+        <div class="message" id="noMessage">
+            <h3>We'll miss you. 🤍</h3>
+            <p>
+                Even if you can't join us, you'll still be
+                remembered on our special day. Send us a little
+                wish if you'd like. 🩵
+            </p>
+        </div>
+
+        <div class="footer">
+            With love, William &amp; East
+        </div>
+
+    </main>
+</div>
+
+<script>
+const weddingDate = new Date("October 4, 2026 18:00:00").getTime();
+
+function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = weddingDate - now;
+
+    if (distance <= 0) {
+        document.getElementById("days").innerText = "00";
+        document.getElementById("hours").innerText = "00";
+        document.getElementById("minutes").innerText = "00";
+        document.getElementById("seconds").innerText = "00";
+        return;
+    }
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance / (1000 * 60 * 60)) % 24);
+    const minutes = Math.floor((distance / (1000 * 60)) % 60);
+    const seconds = Math.floor((distance / 1000) % 60);
+
+    document.getElementById("days").innerText = String(days).padStart(2, "0");
+    document.getElementById("hours").innerText = String(hours).padStart(2, "0");
+    document.getElementById("minutes").innerText = String(minutes).padStart(2, "0");
+    document.getElementById("seconds").innerText = String(seconds).padStart(2, "0");
+}
+
+function showYes() {
+    document.getElementById("yesMessage").style.display = "block";
+    document.getElementById("noMessage").style.display = "none";
+}
+
+function showNo() {
+    document.getElementById("noMessage").style.display = "block";
+    document.getElementById("yesMessage").style.display = "none";
+}
+
+updateCountdown();
+setInterval(updateCountdown, 1000);
+</script>
+
+</body>
+</html>
